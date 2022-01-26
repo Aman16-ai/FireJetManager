@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Note::class],version = 2)
+@Database(entities = [Note::class,Password::class],version = 2)
 abstract class NoteDatabase : RoomDatabase() {
 
     abstract fun getNoteDao():NewNoteDao
+    abstract fun getPasswordDao():PasswordDao
     companion object {
         // Singleton prevents multiple instances of database opening at the
         // same time.

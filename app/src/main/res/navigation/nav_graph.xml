@@ -109,5 +109,17 @@
         <action
             android:id="@+id/action_passwordManagerFragment_to_homeScreenFragment"
             app:destination="@id/homeScreenFragment" />
+        <action
+            android:id="@+id/action_passwordManagerFragment_to_saveUserPassword"
+            app:destination="@id/saveUserPassword" />
+    </fragment>
+    <fragment
+        android:id="@+id/saveUserPassword"
+        android:name="com.example.mvvmnote.ui.PasswordManager.SaveUserPassword"
+        android:label="fragment_save_user_password"
+        tools:layout="@layout/fragment_save_user_password" >
+        <action
+            android:id="@+id/action_saveUserPassword_to_passwordManagerFragment"
+            app:destination="@id/passwordManagerFragment" />
     </fragment>
 </navigation>

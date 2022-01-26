@@ -8,17 +8,24 @@ import android.view.View
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.example.mvvmnote.data.CredentialsDao
+import com.example.mvvmnote.data.NoteDatabase
+import com.example.mvvmnote.data.Password
+import com.example.mvvmnote.data.PasswordDao
 import com.example.mvvmnote.ui.HomeScreenFragmentDirections
 import com.example.mvvmnote.ui.PasswordManager.LoginFragmentDirections
 import com.example.mvvmnote.ui.PasswordManager.SetPasswordFragment
 import com.example.mvvmnote.ui.PasswordManager.SetPasswordFragmentDirections
+import com.example.mvvmnote.utils.MessageCallback
 import com.example.mvvmnote.utils.toast
+import kotlinx.coroutines.launch
 
 class PasswordManagerViewModel(application : Application): AndroidViewModel(application) {
     private var setPasswordState: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     private var loginPasswordState : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private var userpasswordDao :PasswordDao = NoteDatabase.getDatabase(application).getPasswordDao()
     fun getSetPasswordState(): MutableLiveData<Boolean> {
         return setPasswordState
     }
@@ -36,5 +43,11 @@ class PasswordManagerViewModel(application : Application): AndroidViewModel(appl
         credentialsDao.passwordFragmentUI(view)
     }
 
+    fun saveUserPassword(password: Password) {
+        viewModelScope.launch {
+            userpasswordDao.insertPassword(password)
+            getApplication<Application>().toast("Password saved")
+        }
+    }
 
 }
