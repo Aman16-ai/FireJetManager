@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.view.View
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import com.example.mvvmnote.data.CredentialsDao
 import com.example.mvvmnote.ui.HomeScreenFragmentDirections
@@ -16,20 +17,20 @@ import com.example.mvvmnote.ui.PasswordManager.SetPasswordFragmentDirections
 import com.example.mvvmnote.utils.toast
 
 class PasswordManagerViewModel(application : Application): AndroidViewModel(application) {
-    private val credentialsDao = CredentialsDao(application.applicationContext)
-    fun setPassword(view: View,password:String) {
-        if(credentialsDao.setCredentials(password)) {
-            val action = SetPasswordFragmentDirections.actionSetPasswordFragmentToPasswordManagerFragment()
-            view.findNavController().navigate(action)
-        }
+    private var setPasswordState: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private var loginPasswordState : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    fun getSetPasswordState(): MutableLiveData<Boolean> {
+        return setPasswordState
     }
-    fun loginWithPassword(view:View,password: String) {
-        if(credentialsDao.loginWithCredentials(password)) {
-            val action = LoginFragmentDirections.actionLoginFragmentToPasswordManagerFragment()
-            view.findNavController().navigate(action)
-        }else {
-            getApplication<Application>().toast("Login to failed")
-        }
+    fun getLoginPasswordState() : MutableLiveData<Boolean> {
+        return loginPasswordState
+    }
+    private val credentialsDao = CredentialsDao(application.applicationContext)
+    fun setPassword(password:String) {
+        setPasswordState.value = credentialsDao.setCredentials(password)
+    }
+    fun loginWithPassword(password: String) {
+        loginPasswordState.value = credentialsDao.loginWithCredentials(password)
     }
     fun passwordFragmentState(view: View) {
         credentialsDao.passwordFragmentUI(view)

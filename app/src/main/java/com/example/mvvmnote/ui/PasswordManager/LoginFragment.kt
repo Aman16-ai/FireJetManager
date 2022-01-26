@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.mvvmnote.R
 import com.example.mvvmnote.viewmodels.PasswordManagerViewModel
 import com.google.android.material.textfield.TextInputEditText
@@ -36,9 +39,14 @@ class LoginFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
         passwordet = view.findViewById(R.id.login_pass_textInputEt)
         btn = view.findViewById(R.id.login_btn)
-
+        passwordManagerViewModel.getLoginPasswordState().observe(viewLifecycleOwner) {
+            if(it) {
+                val action = LoginFragmentDirections.actionLoginFragmentToPasswordManagerFragment()
+                view.findNavController().navigate(action)
+            }
+        }
         btn.setOnClickListener {
-            passwordManagerViewModel.loginWithPassword(it,passwordet.text.toString())
+            passwordManagerViewModel.loginWithPassword(passwordet.text.toString())
         }
         return view
     }

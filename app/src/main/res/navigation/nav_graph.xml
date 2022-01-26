@@ -105,5 +105,9 @@
         android:id="@+id/passwordManagerFragment"
         android:name="com.example.mvvmnote.ui.PasswordManager.PasswordManagerFragment"
         android:label="fragment_password_manager"
-        tools:layout="@layout/fragment_password_manager" />
+        tools:layout="@layout/fragment_password_manager" >
+        <action
+            android:id="@+id/action_passwordManagerFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment" />
+    </fragment>
 </navigation>

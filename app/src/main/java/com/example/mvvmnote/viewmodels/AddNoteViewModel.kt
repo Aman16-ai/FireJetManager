@@ -6,6 +6,8 @@ import com.example.mvvmnote.data.NewNoteDao
 import com.example.mvvmnote.data.Note
 import com.example.mvvmnote.data.NoteDatabase
 import com.example.mvvmnote.utils.MessageCallback
+import com.google.android.play.core.tasks.Tasks.await
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class AddNoteViewModel(application: Application) : AndroidViewModel(application){
