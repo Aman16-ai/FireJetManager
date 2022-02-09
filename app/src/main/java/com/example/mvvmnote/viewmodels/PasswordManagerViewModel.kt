@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.view.View
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
@@ -48,6 +49,10 @@ class PasswordManagerViewModel(application : Application): AndroidViewModel(appl
             userpasswordDao.insertPassword(password)
             getApplication<Application>().toast("Password saved")
         }
+    }
+
+    fun getUserPassword() : LiveData<List<Password>>{
+        return userpasswordDao.fetchAllPasswords()
     }
 
 }

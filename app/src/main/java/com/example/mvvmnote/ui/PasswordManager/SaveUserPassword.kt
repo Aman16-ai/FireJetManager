@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import com.example.mvvmnote.R
 import com.example.mvvmnote.data.Password
 import com.example.mvvmnote.viewmodels.PasswordManagerViewModel
@@ -45,6 +46,8 @@ class SaveUserPassword : Fragment() {
         }
         savepassBtn.setOnClickListener {
             passwordManagerViewModel.saveUserPassword(Password(name = et_title.text.toString(), password = this.password))
+            val action = SaveUserPasswordDirections.actionSaveUserPasswordToPasswordManagerFragment()
+            it.findNavController().navigate(action)
         }
         return view
     }
